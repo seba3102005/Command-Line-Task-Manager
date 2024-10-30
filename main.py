@@ -27,6 +27,44 @@ def show_tasks():
         print (f"Task {i}: {x} , the priority of it is {y} ,the DUE DATE is on {z}")
         i+=1
 
+def deleteTask():
+    show_tasks()
+    choices_list = [str(a) for a in range (1,len(description)+1)]
+    choice = input("enter the number of the task that you want to delete")
+    while choice not in choices_list:
+        print('invalid task to delete , please enter a valid one')
+        show_tasks()
+        choice = input("enter the number of the task that you want to delete")
+
+    name = "Task"+ choice
+    print(f"deleting { name }")
+    description.pop(name)
+    priority.pop(name)
+    due_date.pop(name)
+
+
+def Update_Task ():
+    show_tasks()
+    choices_list = [str(a) for a in range (1,len(description)+1)]
+    choice = input("enter the number of the task that you want to update")
+    while choice not in choices_list:
+        print('invalid task to update , please enter a valid one')
+        show_tasks()
+        choice = input("enter the number of the task that you want to update")
+
+    name = "Task"+ choice
+    print(f"updating { name }")
+    desc = input("Please Enter theTask description")
+    prio = input("Please enter the Priority of your task")
+    date = input("enter the task's due date")
+
+    description.update( {name : desc} )
+    priority.update({name : prio} )
+    due_date.update({name : date })
+
+
+
+
 
 
 
@@ -40,12 +78,19 @@ while (True):
        MenuShow()
        choice = input("Enter your choice: ")
     if(choice=='5'):
+        print("exitting the program\n ======== \n BYE BYE")
+
         break
     
     if(choice =='2'):
         Add_task()
     elif (choice=='1'):
         show_tasks()
+    elif choice=='3':
+        Update_Task()
+    elif (choice=='4'):
+        deleteTask()
+    
 
     
 
