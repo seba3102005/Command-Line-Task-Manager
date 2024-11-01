@@ -1,6 +1,7 @@
 description = {}
 priority = {}
 due_date = {}
+data ={}
 
 def MenuShow ():
     print("1. View all tasks")
@@ -12,44 +13,57 @@ def MenuShow ():
     print("Please choose an option from 1-5")
 
 def Add_task ():
-    name = "Task"+str((len(description)+1))
+    name = str((len(data)+1))
     desc = input("Please Enter theTask description: ")
     prio = input("Please enter the Priority of your task: ")
     date = input("enter the task's due date: ")
 
-    description.setdefault( name , desc )
-    priority.setdefault(name , prio )
-    due_date.setdefault(name , date )
+    data[name]= {"description": desc , "priority" : prio , "date" : date}
+    # description.setdefault( name , desc )
+    # priority.setdefault(name , prio )
+    # due_date.setdefault(name , date )
 
 def show_tasks():
-    i=1
+    
+    print (len(data))
     print('=============================================')
-    for x,y,z in zip(description.values(),priority.values(),due_date.values()):
-        print (f"Task {i}: {x} , the priority of it is {y} ,the DUE DATE is on {z}")
+
+    i=1
+    for y in data.values():
+        print (f" Task {i}: the description: {y.get('description')}, the priority of it is {y.get('priority')} ,the DUE DATE is on {y.get('date')}")
         i+=1
     print('=============================================')
 
 def deleteTask():
-    if(len(description)==0):
+    if(len(data)==0):
         print('the task list is already empty')
         return
     show_tasks()
-    choices_list = [str(a) for a in range (1,len(description)+1)]
+    choices_list = [str(a) for a in range (1,len(data)+1)]
     choice = input("enter the number of the task that you want to delete")
-   
+    
 
     while choice not in choices_list:
         print('invalid task to delete , please enter a valid one')
         show_tasks()
         choice = input("enter the number of the task that you want to delete")
 
-    name = "Task"+ choice
+
+    name =  choice
     print(f"deleting { name }")
-    description.pop(name)
-    priority.pop(name)
-    due_date.pop(name)
+    data.pop(name)
+    print(f"the length of data = {len(data)}")
+    
+    new_dic = {str(idx): value for idx, value in enumerate(data.values(), start=1)}
 
-
+    
+    data.clear()
+    i=1
+    for value in new_dic.values():
+        data[str(i)] = {"description": value['description'] , "priority" : value['priority'] , "date" : value['date']}
+        
+    print(f"the length of data = {len(data)}")
+    
 def Update_Task ():
     show_tasks()
     choices_list = [str(a) for a in range (1,len(description)+1)]
