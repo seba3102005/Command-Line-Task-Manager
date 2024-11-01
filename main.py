@@ -1,7 +1,3 @@
-import json
-
-
-
 description = {}
 priority = {}
 due_date = {}
@@ -72,24 +68,17 @@ def Update_Task ():
 
 
 
-
 MenuShow()
 while (True):
-
     choice = input("Enter your choice: ")
     choices = ['1','2','3','4','5']
     while choice not in choices:
        print("Invalid choice ,Please Enter a valid one:")
        MenuShow()
        choice = input("Enter your choice: ")
-       
     if(choice=='5'):
-        json_data = {}
-        for i in range(len(description)):  
-            content = f"Task{i}"
-            json_data[f'Task{i}'] = content  
-        json_file = json.dump(json_data,"description.json", indent=4)
         print("exitting the program\n ======== \n BYE BYE")
+
         break
     
     if(choice =='2'):
@@ -103,5 +92,4 @@ while (True):
     
 
     
-
 
