@@ -29,8 +29,8 @@ def show_tasks():
     print('=============================================')
 
     i=1
-    for y in data.values():
-        print (f" Task {i}: the description: {y.get('description')}, the priority of it is {y.get('priority')} ,the DUE DATE is on {y.get('date')}")
+    for indx,value in zip(data.keys(),data.values()):
+        print (f" Task {indx}: the description: {value.get('description')}, the priority of it is {value.get('priority')} ,the DUE DATE is on {value.get('date')}")
         i+=1
     print('=============================================')
 
@@ -52,7 +52,7 @@ def deleteTask():
     name =  choice
     print(f"deleting { name }")
     data.pop(name)
-    print(f"the length of data = {len(data)}")
+    
     
     new_dic = {str(idx): value for idx, value in enumerate(data.values(), start=1)}
 
@@ -62,7 +62,7 @@ def deleteTask():
     for value in new_dic.values():
         data[str(i)] = {"description": value['description'] , "priority" : value['priority'] , "date" : value['date']}
         
-    print(f"the length of data = {len(data)}")
+    
     
 def Update_Task ():
     show_tasks()
