@@ -1,3 +1,4 @@
+import json
 description = {}
 priority = {}
 due_date = {}
@@ -61,9 +62,7 @@ def deleteTask():
     i=1
     for value in new_dic.values():
         data[str(i)] = {"description": value['description'] , "priority" : value['priority'] , "date" : value['date']}
-        
-    
-    
+           
 def Update_Task ():
     show_tasks()
     choices_list = [str(a) for a in range (1,len(data)+1)]
@@ -85,7 +84,8 @@ def Update_Task ():
 
 
 
-
+with open('description.json' , 'r') as file:
+            data = json.loads(file.read())  
 
 
 
@@ -95,12 +95,18 @@ while (True):
     choice = input("Enter your choice: ")
     choices = ['1','2','3','4','5']
 
+     
+
+
     while choice not in choices:
        print("Invalid choice ,Please Enter a valid one:")
        MenuShow()
        choice = input("Enter your choice: ")
 
     if(choice=='5'):
+        with open('description.json' , 'w') as file:
+            json.dump(data,file)   
+
         print("exitting the program\n ======== \n BYE BYE")
         break
     
