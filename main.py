@@ -28,10 +28,10 @@ def show_tasks():
     print (len(data))
     print('=============================================')
 
-    i=1
+    
     for indx,value in zip(data.keys(),data.values()):
         print (f" Task {indx}: the description: {value.get('description')}, the priority of it is {value.get('priority')} ,the DUE DATE is on {value.get('date')}")
-        i+=1
+        
     print('=============================================')
 
 def deleteTask():
@@ -66,7 +66,7 @@ def deleteTask():
     
 def Update_Task ():
     show_tasks()
-    choices_list = [str(a) for a in range (1,len(description)+1)]
+    choices_list = [str(a) for a in range (1,len(data)+1)]
     choice = input("enter the number of the task that you want to update")
 
     while choice not in choices_list:
@@ -74,16 +74,14 @@ def Update_Task ():
         show_tasks()
         choice = input("enter the number of the task that you want to update")
 
-    name = "Task"+ choice
+    name =  choice
     print(f"updating { name }")
     desc = input("Please Enter theTask description")
     prio = input("Please enter the Priority of your task")
     date = input("enter the task's due date")
 
-    description.update( {name : desc} )
-    priority.update({name : prio} )
-    due_date.update({name : date })
-
+    data.update( {name : {'description' : desc , 'priority' : prio , 'date' : date }} )
+    
 
 
 
