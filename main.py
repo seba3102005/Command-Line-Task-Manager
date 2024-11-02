@@ -13,16 +13,82 @@ def MenuShow ():
     print("======================")
     print("Please choose an option from 1-5")
 
+def date_validation1 (date):
+    while date.count('-')!=1:
+        date = input("please enter the task's due date in (day-month) format: ")
+    return date
+
+def date_validation2 (valid_days,valid_months,day,month):
+    while day not in valid_days or month not in valid_months:
+        date = input("please enter the task's due date in (day-month) format: ")
+        date = date_validation1(date)
+        date_list = date.split('-')
+        day = date_list[0]
+        month = date_list[1]
+
+    return day,month
+
+def date_validation3 (month):
+    if month =='2':
+        available_days =  [ str(n) for n in range(1,30)]
+
+    elif (int(month)<=7 and int(month)%2==1) or (int(month)>7 and int(month)%2==0):
+         available_days =  [ str(n) for n in range(1,32)]
+
+    elif (int(month)<7 and int(month)%2==0) or (int(month)>7 and int(month)%2==1):
+         available_days =  [ str(n) for n in range(1,31)]
+
+    return available_days
+
+
 def Add_task ():
     name = str((len(data)+1))
     desc = input("Please Enter theTask description: ")
+    while len(desc)==0:
+        print("the description is empty, please enter a description for your task: ")
+        desc = input("Please Enter theTask description: ")
+    
     prio = input("Please enter the Priority of your task: ")
-    date = input("enter the task's due date: ")
+    priority_choices = ['LOW','MEDIUM','HIGH']
+    while prio.upper() not in priority_choices:
+        print ("the priority is invalid ,please enter a valid one")
+        prio = input("Please enter the Priority of your task: ")
+    
+    date = input("enter the task's due date in (day-month) format: ")
+    date = date_validation1(date)
+   
+    
+    date_list = date.split('-')
+    day = date_list[0]
+    month = date_list[1]
+    print(day)
+    print(month)
+    valid_days = [ str(n) for n in range(1,32)]
+    valid_months = [ str(n) for n in range(1,13)]
+    
+    
+    day,month=date_validation2(valid_days,valid_months,day,month)
+   
+    available_days = date_validation3(month)
+    
+    while day not in available_days:
+        print ("this date cannot be found")
+        date = input("enter the task's due date in (day-month) format: ")
+        date = date_validation1(date)
+        
+        date_list = date.split('-')
+        day = date_list[0]
+        month = date_list[1]
+        day,month = date_validation2(valid_days,valid_months,day,month)
+        available_days = date_validation3(month)
+
+
+        
+    print("mabrroook validation sa7")
+    date = day+'-'+month
 
     data[name]= {"description": desc , "priority" : prio , "date" : date}
-    # description.setdefault( name , desc )
-    # priority.setdefault(name , prio )
-    # due_date.setdefault(name , date )
+   
 
 def show_tasks():
     
@@ -84,8 +150,12 @@ def Update_Task ():
 
 
 
-with open('description.json' , 'r') as file:
-            data = json.loads(file.read())  
+with open('description.json', 'r') as file:
+    try:
+        data = json.load(file)  
+    except json.JSONDecodeError:
+        data = {}  
+
 
 
 
