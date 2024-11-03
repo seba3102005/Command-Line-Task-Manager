@@ -19,7 +19,7 @@ def date_validation1 (date):
 
 def date_validation2 (valid_days,valid_months,day,month):
     while day not in valid_days or month not in valid_months:
-        date = input("please enter the task's due date in (day-month) format: ")
+        date = input("Invalid Input,please enter the task's due date in (day-month) format: ")
         date = date_validation1(date)
         date_list = date.split('-')
         day = date_list[0]
@@ -87,7 +87,7 @@ def Add_task ():
     desc = input("Please Enter theTask description: ")
     desc = descrip_validation(desc)
 
-    prio = input("Please enter the Priority of your task: ")
+    prio = input("Please enter the Priority of your task(high ,medium , low): ")
     
     prio = priority_validation(prio)
 
@@ -116,6 +116,7 @@ def deleteTask():
     if(len(data)==0):
         show_tasks()
         print('the task list is already empty')
+        print ('')
         return
     show_tasks()
     choices_list = [str(a) for a in range (1,len(data)+1)]
@@ -144,6 +145,12 @@ def deleteTask():
            
 def Update_Task ():
     show_tasks()
+
+    if len(data) == 0:
+        print("the task list is empty")
+        print('')
+        return
+    
     choices_list = [str(a) for a in range (1,len(data)+1)]
     choice = input("enter the number of the task that you want to update: ")
 
@@ -157,10 +164,10 @@ def Update_Task ():
     desc = input("Please Enter theTask description: ")
     desc = descrip_validation(desc)
 
-    prio = input("Please enter the Priority of your task: ")
+    prio = input("Please enter the Priority of your task(high , medium ,low): ")
     prio = priority_validation(prio)
 
-    date = input("enter the task's due date: ")
+    date = input("enter the task's due date in (day-month)format: ")
     day,month = full_date_validation(date)
 
     date = day+'-'+month
@@ -171,6 +178,7 @@ def save_changes ():
     with open('description.json' , 'w') as file:
             json.dump(data,file)   
     print("the data is saved successfully")
+    print('')
 
 
 
