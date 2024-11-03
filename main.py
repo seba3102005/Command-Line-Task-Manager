@@ -1,7 +1,5 @@
 import json
-description = {}
-priority = {}
-due_date = {}
+
 data ={}
 
 def MenuShow ():
@@ -109,7 +107,7 @@ def show_tasks():
 
     
     for indx,value in zip(data.keys(),data.values()):
-        print (f" Task {indx}: the description: {value.get('description')}, the priority of it is {value.get('priority')} ,the DUE DATE is on {value.get('date')}")
+        print (f" Task {indx}: the description: {value.get('description')}', the priority of it is {value.get('priority')} ,the DUE DATE is on {value.get('date')}")
         
     print('=============================================')
 
@@ -120,7 +118,7 @@ def deleteTask():
         return
     show_tasks()
     choices_list = [str(a) for a in range (1,len(data)+1)]
-    choice = input("enter the number of the task that you want to delete")
+    choice = input("enter the number of the task that you want to delete: ")
     
 
     while choice not in choices_list:
@@ -139,7 +137,6 @@ def deleteTask():
     
     data.clear()
     i=1
-    print(len(new_dic))
     for value in new_dic.values():
         data[str(i)] = {"description": value['description'] , "priority" : value['priority'] , "date" : value['date']}
         i+=1
@@ -165,10 +162,7 @@ def Update_Task ():
     date = input("enter the task's due date: ")
     day,month = full_date_validation(date)
 
-        
-    
     date = day+'-'+month
-
 
     data.update( {name : {'description' : desc , 'priority' : prio , 'date' : date }} )
     
@@ -181,17 +175,11 @@ with open('description.json', 'r') as file:
     except :
         data = {}  
 
-
-
-
 while (True):
 
     MenuShow()
     choice = input("Enter your choice: ")
     choices = ['1','2','3','4','5']
-
-     
-
 
     while choice not in choices:
        print("Invalid choice ,Please Enter a valid one:")
@@ -215,7 +203,6 @@ while (True):
         Update_Task()
 
     elif (choice=='4'):
-        print(len(data))
         deleteTask()
     
 
