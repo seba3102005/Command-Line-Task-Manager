@@ -7,9 +7,10 @@ def MenuShow ():
     print("2. Add a task")
     print("3. Update a task")
     print("4. Delete a task")
-    print("5. Exit")
+    print("5. Save the changes")
+    print("6. Exit")
     print("======================")
-    print("Please choose an option from 1-5")
+    print("Please choose an option from 1-6")
 
 def date_validation1 (date):
     while date.count('-')!=1:
@@ -107,7 +108,7 @@ def show_tasks():
 
     
     for indx,value in zip(data.keys(),data.values()):
-        print (f" Task {indx}: the description: {value.get('description')}', the priority of it is {value.get('priority')} ,the DUE DATE is on {value.get('date')}")
+        print (f" Task {indx}: the description: {value.get('description')}, the priority of it is {value.get('priority')} ,the DUE DATE is on {value.get('date')}")
         
     print('=============================================')
 
@@ -166,6 +167,10 @@ def Update_Task ():
 
     data.update( {name : {'description' : desc , 'priority' : prio , 'date' : date }} )
     
+def save_changes ():
+    with open('description.json' , 'w') as file:
+            json.dump(data,file)   
+    print("the data is saved successfully")
 
 
 
@@ -179,32 +184,37 @@ while (True):
 
     MenuShow()
     choice = input("Enter your choice: ")
-    choices = ['1','2','3','4','5']
+    choices = ['1','2','3','4','5','6']
 
     while choice not in choices:
        print("Invalid choice ,Please Enter a valid one:")
        MenuShow()
        choice = input("Enter your choice: ")
 
-    if(choice=='5'):
+    if(choice=='6'):
         with open('description.json' , 'w') as file:
             json.dump(data,file)   
 
+        print("all the data has been saved automatically")
         print("exitting the program\n ======== \n BYE BYE")
         break
     
-    if(choice =='2'):
+    
+    
+    if choice =='2':
         Add_task()
 
-    elif (choice=='1'):
+    elif choice=='1':
         show_tasks()
 
     elif choice=='3':
         Update_Task()
 
-    elif (choice=='4'):
+    elif choice=='4':
         deleteTask()
-    
+
+    elif choice =='5':
+        save_changes() 
 
     
 
