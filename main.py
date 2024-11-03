@@ -40,29 +40,14 @@ def date_validation3 (month):
 
     return available_days
 
-
-def Add_task ():
-    name = str((len(data)+1))
-    desc = input("Please Enter theTask description: ")
-    while len(desc)==0:
-        print("the description is empty, please enter a description for your task: ")
-        desc = input("Please Enter theTask description: ")
-    
-    prio = input("Please enter the Priority of your task: ")
-    priority_choices = ['LOW','MEDIUM','HIGH']
-    while prio.upper() not in priority_choices:
-        print ("the priority is invalid ,please enter a valid one")
-        prio = input("Please enter the Priority of your task: ")
-    
-    date = input("enter the task's due date in (day-month) format: ")
+def full_date_validation(date):
     date = date_validation1(date)
    
     
     date_list = date.split('-')
     day = date_list[0]
     month = date_list[1]
-    print(day)
-    print(month)
+   
     valid_days = [ str(n) for n in range(1,32)]
     valid_months = [ str(n) for n in range(1,13)]
     
@@ -82,9 +67,36 @@ def Add_task ():
         day,month = date_validation2(valid_days,valid_months,day,month)
         available_days = date_validation3(month)
 
+    return day,month
+
+def descrip_validation(desc):
+    while len(desc)==0:
+        print("the description is empty, please enter a description for your task: ")
+        desc = input("Please Enter theTask description: ")
+    return desc
+
+def priority_validation(prio):
+    priority_choices = ['LOW','MEDIUM','HIGH']
+    while prio.upper() not in priority_choices:
+        print ("the priority is invalid ,please enter a valid one")
+        prio = input("Please enter the Priority of your task: ")
+    return prio
+
+
+def Add_task ():
+    name = str((len(data)+1))
+    desc = input("Please Enter theTask description: ")
+    desc = descrip_validation(desc)
+
+    prio = input("Please enter the Priority of your task: ")
+    
+    prio = priority_validation(prio)
+
+    date = input("enter the task's due date in (day-month) format: ")
+    
+    day,month = full_date_validation(date)
 
         
-    print("mabrroook validation sa7")
     date = day+'-'+month
 
     data[name]= {"description": desc , "priority" : prio , "date" : date}
@@ -92,7 +104,7 @@ def Add_task ():
 
 def show_tasks():
     
-    print (len(data))
+    
     print('=============================================')
 
     
@@ -103,6 +115,7 @@ def show_tasks():
 
 def deleteTask():
     if(len(data)==0):
+        show_tasks()
         print('the task list is already empty')
         return
     show_tasks()
@@ -126,24 +139,36 @@ def deleteTask():
     
     data.clear()
     i=1
+    print(len(new_dic))
     for value in new_dic.values():
         data[str(i)] = {"description": value['description'] , "priority" : value['priority'] , "date" : value['date']}
+        i+=1
            
 def Update_Task ():
     show_tasks()
     choices_list = [str(a) for a in range (1,len(data)+1)]
-    choice = input("enter the number of the task that you want to update")
+    choice = input("enter the number of the task that you want to update: ")
 
     while choice not in choices_list:
-        print('invalid task to update , please enter a valid one')
+        print('invalid task to update , please enter a valid one: ')
         show_tasks()
-        choice = input("enter the number of the task that you want to update")
+        choice = input("enter the number of the task that you want to update: ")
 
     name =  choice
     print(f"updating { name }")
-    desc = input("Please Enter theTask description")
-    prio = input("Please enter the Priority of your task")
-    date = input("enter the task's due date")
+    desc = input("Please Enter theTask description: ")
+    desc = descrip_validation(desc)
+
+    prio = input("Please enter the Priority of your task: ")
+    prio = priority_validation(prio)
+
+    date = input("enter the task's due date: ")
+    day,month = full_date_validation(date)
+
+        
+    
+    date = day+'-'+month
+
 
     data.update( {name : {'description' : desc , 'priority' : prio , 'date' : date }} )
     
@@ -153,7 +178,7 @@ def Update_Task ():
 with open('description.json', 'r') as file:
     try:
         data = json.load(file)  
-    except json.JSONDecodeError:
+    except :
         data = {}  
 
 
@@ -190,6 +215,7 @@ while (True):
         Update_Task()
 
     elif (choice=='4'):
+        print(len(data))
         deleteTask()
     
 
